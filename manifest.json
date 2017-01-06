@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+
+  "name": "Article-to-Speech",
+  "description": "Text-to-speech extension that transforms NYTimes articles in audio",
+  "author": "Adriano Carmezim Filho",
+  "version": "1.0",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [ "polyfill.js", "ext.js"],
+      "run_at": "document_end"
+    }],
+  "browser_action": {
+      "default_icon": "default.png"
+    },
+    "icons": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "permissions": [
+      "activeTab"
+    ]
+}
