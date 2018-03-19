@@ -3,8 +3,8 @@ var polyfills = {
 
     settings = settings || {};
     var newUtt;
-	var voices;
-	var utt_i;
+    var voices;
+    var utt_i;
     var txt = (settings && settings.offset !== undefined ? utt.text.substring(settings.offset) : utt.text);
     if (utt.voice && utt.voice.voiceURI === 'native') { // Not part of the spec
       newUtt = utt;
@@ -33,11 +33,11 @@ var polyfills = {
       }
       var chunk = chunkArr[0];
       newUtt = new SpeechSynthesisUtterance(chunk);
-	  voices = window.speechSynthesis.getVoices();
-	  newUtt.lang = 'en-US';
-	  newUtt.voiceURI = 'Google US English';
-	  newUtt.voice = voices[2];
-	  
+      voices = window.speechSynthesis.getVoices();
+      newUtt.voice = voices.filter(function(voice) { return voice.name == 'Google US English Male'; })[0];
+      newUtt.voiceURI = 'Google US English';
+      newUtt.lang = 'en-US';
+
       for (utt_i in utt) {
         if (utt.hasOwnProperty(utt_i) && utt_i !== 'text') {
           newUtt[utt_i] = utt[utt_i];
@@ -58,12 +58,9 @@ var polyfills = {
       settings.modifier(newUtt);
     }
 	
-    console.log(newUtt); //IMPORTANT!! Do not remove: Logging the object out fixes some onend firing issues.
-    //placing the speak invocation inside a callback fixes ordering and onend issues.
+    console.log(newUtt); // leave this
 	setTimeout(function () {
       //force US english. Otherwise, speech quality would suffer for English webpages.
-      
-	 
       //newUtt.voice = speechSynthesis.getVoices().filter(function(val) {
       //  return val.
       //});
