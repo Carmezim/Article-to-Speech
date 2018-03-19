@@ -1,14 +1,12 @@
-//Copyright © 2016 Adriano Carmezim Filho. All rights reserved.
+// Copyright © 2016 Adriano Carmezim Filho. All rights reserved.
 // Proprietary License.
 // email: carmezim.filho@gmail.com
-
 var articleToSpeech = {
   data: {
     Article: "",
     speechInProgress: false,
     fallbackAudio: null
   },
-
 
   initialize: function() {
     if (!articleToSpeech.hasArticle()) {
@@ -19,18 +17,19 @@ var articleToSpeech = {
     }
   },
 
-
   hasArticle: function() {
     // Parse article content to array
-    this.data.Article = window.document.getElementsByClassName("story-body-text");
 
+    this.data.Article = window.document.getElementsByClassName("story-body-text");
+    console.log("Article Element", this.data.Article);
     var textArr = this.data.Article;
     var articleContentArray = [];
     var articleText;
-
+    console.log("story body text", textArr);
       // Apparently javascript does not consider textArr a real array hence
       // the need for pushing the content to a valid array to further concatenate it with join()
       for ( var i = 0; i < textArr.length; i++ ) {
+	      console.log("loop, textArr elements", textArr[i]);
         articleContentArray.push(textArr[i].textContent);
       }
       articleText = articleContentArray.join(' ');
@@ -39,9 +38,9 @@ var articleToSpeech = {
     return this.data.Article;
   },
 
-
   speechSynth: function() {
     // if chrome speechSynthesis supported
+    console.log("speech synth");
     if (window.speechSynthesis) {
       // check for ongoing speech
       if (this.data.speechInProgress) {
@@ -80,9 +79,7 @@ var articleToSpeech = {
   }
 };
 
-
 chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
-
   if (msg.action == 'articleToSpeech') {
     articleToSpeech.initialize();
   }

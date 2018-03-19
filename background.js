@@ -1,4 +1,4 @@
-chrome.browserAction.onCLicked.addListener(function (tab) {
+chrome.browserAction.onClicked.addListener(function (tab) {
   //fired when user clicks on extensions icon
   sendMessage();
 });
